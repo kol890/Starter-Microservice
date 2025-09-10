@@ -14,18 +14,23 @@ from typing import Optional
 from models.person import PersonCreate, PersonRead, PersonUpdate
 from models.address import AddressCreate, AddressRead, AddressUpdate
 from models.health import Health
+from models.pet import PetCreate, PetRead, PetUpdate
+from models.job import JobCreate, JobRead, JobUpdate
 
-port = int(os.environ.get("FASTAPIPORT", 8000))
+
+port = int(os.environ.get("FASTAPIPORT", 8000)) #best practice to get config info from env, defaults to 8000
 
 # -----------------------------------------------------------------------------
 # Fake in-memory "databases"
 # -----------------------------------------------------------------------------
 persons: Dict[UUID, PersonRead] = {}
 addresses: Dict[UUID, AddressRead] = {}
+pets: Dict[UUID, PetRead] = {}
+jobs: Dict[UUID, JobRead] = {}
 
 app = FastAPI(
-    title="Person/Address API",
-    description="Demo FastAPI app using Pydantic v2 models for Person and Address",
+    title="Person/Address/Pet/Job API",
+    description="Demo FastAPI app using Pydantic v2 models for Person, Address, Pet, and Job",
     version="0.1.0",
 )
 
@@ -160,6 +165,61 @@ def update_person(person_id: UUID, update: PersonUpdate):
     return persons[person_id]
 
 # -----------------------------------------------------------------------------
+# Pet endpoints
+# -----------------------------------------------------------------------------
+@app.get("/pets", response_model=List[PetRead])
+def list_pets():
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+@app.post("/pets", response_model=PetRead)
+def create_pet(pet: PetCreate):
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+@app.get("/pets/{pet_id}", response_model=PetRead)
+def get_pet(pet_id: UUID):
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+@app.put("/pets/{pet_id}")
+def update_pet(pet_id: UUID):
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+@app.delete("/pets/{pet_id}")
+def delete_pet(pet_id: UUID):
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+@app.patch("/pets/{pet_id}", response_model=PetRead)
+def update_pet(pet_id: UUID, update: PetUpdate):
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+# -----------------------------------------------------------------------------
+# Job endpoints
+# -----------------------------------------------------------------------------
+@app.get("/jobs", response_model=List[JobRead])
+def list_jobs():
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+@app.post("/jobs", response_model=JobRead)
+def create_job(job: JobCreate):
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+@app.get("/jobs/{job_id}", response_model=JobRead)
+def get_job(job_id: UUID):
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+@app.put("/jobs/{job_id}")
+def update_job(job_id: UUID):
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+@app.delete("/jobs/{job_id}")
+def delete_job(job_id: UUID):
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+@app.patch("/jobs/{job_id}", response_model=JobRead)
+def update_job(job_id: UUID, update: JobUpdate):
+    raise HTTPException(status_code=501, detail="Not implemented")
+
+
+# -----------------------------------------------------------------------------
 # Root
 # -----------------------------------------------------------------------------
 @app.get("/")
@@ -172,4 +232,4 @@ def root():
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True) #listen on local host
